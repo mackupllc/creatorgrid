@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { getLocal, setLocal } from "@/lib/storage"
 import { Brain, FolderKanban, Calendar, Edit3 } from "lucide-react"
 
@@ -36,7 +37,12 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-gradient-to-br from-cyan-200 via-blue-300 to-purple-400 dark:from-black dark:via-blue-950 dark:to-blue-800 flex items-center justify-center p-4">
+      {/* Theme Toggle - positioned in top right */}
+      <div className="fixed top-4 right-4 z-10">
+        <ThemeToggle />
+      </div>
+      
       <div className="max-w-2xl w-full space-y-8 text-center">
         {/* Welcome Section */}
         <div className="space-y-4">
