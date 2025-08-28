@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+dist/
+.env*
+!.env.example
+npm-debug.log*
+yarn*.log*
+pnpm*.log*
+.DS_Store
+.vscode/**
+!.vscode/extensions.json
