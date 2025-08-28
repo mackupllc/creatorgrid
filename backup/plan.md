@@ -3,7 +3,7 @@
 ## Overview
 CreatorGrid is a simple web app for content creators to dump and organize ideas.  
 Stack: Next.js 14 (App Router), React, TypeScript, Tailwind, shadcn/ui, next-themes.  
-Style: Clean, minimal, rounded edges, light/dark mode, responsive.
+Style: Clean, minimal, rounded edges, light/dark mode, responsive, Aesthetically pretty with clean and smooth gradients.
 Package manager: npm.
 
 ## Pages
