@@ -4,6 +4,7 @@
 CreatorGrid is a simple web app for content creators to dump and organize ideas.  
 Stack: Next.js 14 (App Router), React, TypeScript, Tailwind, shadcn/ui, next-themes.  
 Style: Clean, minimal, rounded edges, light/dark mode, responsive.
+Package manager: npm.
 
 ## Pages
 - **Home**: Greeting (“Welcome [NAME]”), “What are you cooking?”, input to set `[NAME]` (stored in localStorage). Navigation buttons to other pages.
@@ -19,6 +20,7 @@ Style: Clean, minimal, rounded edges, light/dark mode, responsive.
 ## Notes
 - Build in small steps. 
 - Prioritize testing/previewing each page before adding complexity.
+Phase 1 data is client-side only via localStorage.
 
 ## Developer Goals
 - Keep code modular and organized so new features can be added later.  
@@ -29,4 +31,10 @@ Style: Clean, minimal, rounded edges, light/dark mode, responsive.
 
 ## Roadmap
 - **Phase 1 (MVP)**: Home, Brain Dump (text only), Projects (basic fields), Calendar (basic view).  
-- **Phase 2 (Future)**: Voice input + transcription, external calendar sync, additional platforms beyond YouTube, advanced project tracking.  
+- **Phase 2 (Future)**: Voice input + transcription, external calendar sync, additional platforms beyond YouTube, advanced project tracking. 
+
+## Acceptance (Phase 1 quick checks)
+- Home: name persists to localStorage, buttons navigate, navbar hidden.
+- Brain Dump: can add/edit/delete a text note; persists for the session.
+- Projects: can add a project with Title/Type/Status/Script/Publish Date/Sponsor; list renders.
+- Calendar: shows items for chosen Publish Dates from Projects.
