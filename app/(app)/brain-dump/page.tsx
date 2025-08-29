@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
-import { Pin, Trash2, Edit3, Search, Plus, GripVertical } from "lucide-react"
+import { Pin, Trash2, Edit3, Search, Plus, GripVertical, Brain } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 
@@ -60,23 +60,34 @@ export default function BrainDumpPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-200 via-blue-300 to-purple-400 dark:from-black dark:via-blue-950 dark:to-blue-800">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Brain Dump</h1>
-          <p className="text-muted-foreground">Capture your thoughts quickly and organize them later</p>
+        <div className="text-center space-y-4 pt-8 pb-2">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <div className="p-3 bg-white/10 dark:bg-white/5 rounded-2xl backdrop-blur-sm border border-white/20">
+              <Brain className="w-8 h-8 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Brain Dump
+              </h1>
+            </div>
+          </div>
+          <p className="text-lg text-foreground/80 max-w-md mx-auto leading-relaxed">
+            Capture your thoughts quickly and organize them later
+          </p>
         </div>
 
         {/* Add Note Form */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="space-y-4">
+        <Card className="backdrop-blur-sm bg-white/10 dark:bg-white/5 border-white/20 shadow-xl">
+          <CardContent className="p-8">
+            <div className="space-y-6">
               <Textarea
-                placeholder="What's on your mind?"
+                placeholder="What's on your mind? ✨"
                 value={newNoteText}
                 onChange={(e) => setNewNoteText(e.target.value)}
-                className="min-h-[100px] resize-none"
-                onKeyPress={(e) => {
+                className="min-h-[120px] resize-none text-lg bg-white/50 dark:bg-black/20 border-white/30 focus:bg-white/70 dark:focus:bg-black/40 transition-colors placeholder:text-foreground/50"
+                onKeyDown={(e) => {
                   if (e.key === 'Enter' && e.ctrlKey) {
                     e.preventDefault()
                     handleAddNote()
@@ -84,11 +95,16 @@ export default function BrainDumpPage() {
                 }}
               />
               <div className="flex justify-between items-center">
-                <span className="text-xs text-muted-foreground">
-                  Press Ctrl+Enter to add quickly
+                <span className="text-sm text-foreground/60 font-medium">
+                  💡 Press Ctrl+Enter to add quickly
                 </span>
-                <Button onClick={handleAddNote} disabled={!newNoteText.trim()}>
-                  <Plus className="w-4 h-4 mr-2" />
+                <Button 
+                  onClick={handleAddNote} 
+                  disabled={!newNoteText.trim()}
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all"
+                >
+                  <Plus className="w-5 h-5 mr-2" />
                   Add Note
                 </Button>
               </div>
@@ -98,13 +114,13 @@ export default function BrainDumpPage() {
 
         {/* Search */}
         {notes.length > 0 && (
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <div className="relative max-w-md mx-auto">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-foreground/40" />
             <Input
-              placeholder="Search notes..."
+              placeholder="🔍 Search your thoughts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-12 h-12 bg-white/20 dark:bg-white/10 border-white/30 backdrop-blur-sm text-lg placeholder:text-foreground/50 focus:bg-white/30 dark:focus:bg-white/20 transition-colors"
             />
           </div>
         )}
@@ -116,19 +132,26 @@ export default function BrainDumpPage() {
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={`space-y-4 transition-colors ${
-                  snapshot.isDraggingOver ? 'bg-muted/20 rounded-lg p-2' : ''
+                className={`space-y-4 ${
+                  snapshot.isDraggingOver ? 'bg-white/5 dark:bg-white/10 rounded-xl p-3' : 'p-1'
                 }`}
+                style={{
+                  minHeight: '200px'
+                }}
               >
                 {filteredNotes.length === 0 && searchQuery && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    No notes found matching "{searchQuery}"
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">🔍</div>
+                    <p className="text-lg text-foreground/70 mb-2">No notes found</p>
+                    <p className="text-foreground/50">Try searching for "{searchQuery}" differently</p>
                   </div>
                 )}
 
                 {filteredNotes.length === 0 && !searchQuery && notes.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    No notes yet. Add your first thought above! 💭
+                  <div className="text-center py-16">
+                    <div className="text-8xl mb-6">🧠✨</div>
+                    <h3 className="text-xl font-semibold text-foreground/80 mb-2">Your mind palace awaits</h3>
+                    <p className="text-foreground/60">Start dumping your thoughts above and watch your ideas come to life!</p>
                   </div>
                 )}
 
@@ -138,9 +161,16 @@ export default function BrainDumpPage() {
                       <Card
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        className={`transition-all ${note.pinned ? 'ring-2 ring-primary/20 bg-primary/5' : ''} ${
-                          snapshot.isDragging ? 'shadow-lg rotate-1 scale-105' : ''
+                        className={`group backdrop-blur-sm border-white/20 ${
+                          note.pinned 
+                            ? 'ring-2 ring-primary/30 bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg' 
+                            : 'bg-white/10 dark:bg-white/5 hover:bg-white/20 dark:hover:bg-white/10'
+                        } ${
+                          snapshot.isDragging 
+                            ? 'shadow-2xl bg-white/95 dark:bg-white/40' 
+                            : 'transition-all duration-200 ease-out hover:shadow-xl hover:scale-[1.02]'
                         }`}
+                        style={provided.draggableProps.style}
                       >
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between gap-4">
@@ -149,7 +179,7 @@ export default function BrainDumpPage() {
                               {!searchQuery && (
                                 <div
                                   {...provided.dragHandleProps}
-                                  className="flex items-center justify-center w-6 h-6 mt-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing transition-opacity"
+                                  className="flex items-center justify-center w-8 h-8 mt-1 text-foreground/30 hover:text-foreground/70 cursor-grab active:cursor-grabbing transition-all opacity-0 group-hover:opacity-100 rounded-lg hover:bg-white/20 dark:hover:bg-white/10"
                                 >
                                   <GripVertical className="w-4 h-4" />
                                 </div>
@@ -175,25 +205,25 @@ export default function BrainDumpPage() {
                                   </div>
                                 ) : (
                                   <>
-                                    <p className="text-sm whitespace-pre-wrap break-words mb-2">
+                                    <p className="text-base leading-relaxed whitespace-pre-wrap break-words mb-3 text-foreground/90">
                                       {note.text}
                                     </p>
-                                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                    <div className="flex items-center gap-2 text-xs text-foreground/60 font-medium">
                                       <span>
-                                        Created {formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}
+                                        ✨ {formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}
                                       </span>
                                       {note.updatedAt && (
                                         <>
                                           <span>•</span>
                                           <span>
-                                            Updated {formatDistanceToNow(new Date(note.updatedAt), { addSuffix: true })}
+                                            📝 Updated {formatDistanceToNow(new Date(note.updatedAt), { addSuffix: true })}
                                           </span>
                                         </>
                                       )}
                                       {note.pinned && (
                                         <>
                                           <span>•</span>
-                                          <span className="flex items-center gap-1 text-primary">
+                                          <span className="flex items-center gap-1 text-primary font-semibold">
                                             <Pin className="w-3 h-3" />
                                             Pinned
                                           </span>
@@ -206,12 +236,16 @@ export default function BrainDumpPage() {
                             </div>
 
                             {editingId !== note.id && (
-                              <div className="flex items-center gap-1 flex-shrink-0">
+                              <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <Button
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => togglePin(note.id)}
-                                  className={note.pinned ? 'text-primary' : ''}
+                                  className={`hover:scale-110 transition-all ${
+                                    note.pinned 
+                                      ? 'text-primary hover:text-primary bg-primary/10 hover:bg-primary/20' 
+                                      : 'text-foreground/60 hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10'
+                                  }`}
                                 >
                                   <Pin className="w-4 h-4" />
                                 </Button>
@@ -219,6 +253,7 @@ export default function BrainDumpPage() {
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => handleEditNote(note.id, note.text)}
+                                  className="text-foreground/60 hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 hover:scale-110 transition-all"
                                 >
                                   <Edit3 className="w-4 h-4" />
                                 </Button>
@@ -226,7 +261,7 @@ export default function BrainDumpPage() {
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => deleteNote(note.id)}
-                                  className="text-destructive hover:text-destructive"
+                                  className="text-foreground/60 hover:text-destructive hover:bg-destructive/10 hover:scale-110 transition-all"
                                 >
                                   <Trash2 className="w-4 h-4" />
                                 </Button>
@@ -246,11 +281,19 @@ export default function BrainDumpPage() {
 
         {/* Stats */}
         {notes.length > 0 && (
-          <div className="text-center text-xs text-muted-foreground">
-            {notes.length} {notes.length === 1 ? 'note' : 'notes'} total
-            {notes.filter(n => n.pinned).length > 0 && (
-              <span> • {notes.filter(n => n.pinned).length} pinned</span>
-            )}
+          <div className="text-center py-6">
+            <div className="inline-flex items-center gap-6 px-6 py-3 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-full border border-white/20">
+              <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                <span className="text-lg">📝</span>
+                {notes.length} {notes.length === 1 ? 'note' : 'notes'}
+              </div>
+              {notes.filter(n => n.pinned).length > 0 && (
+                <div className="flex items-center gap-2 text-sm font-medium text-primary">
+                  <Pin className="w-4 h-4" />
+                  {notes.filter(n => n.pinned).length} pinned
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
